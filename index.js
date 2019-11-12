@@ -2,10 +2,15 @@
 
 function getDogImage(breed) {
   fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+    }
+    throw new Error(response.statusText);
+  })
     .then(responseJson =>
       displayResults(responseJson))
-    .catch(error => alert('Something went wrong. Try again later.'));
+    .catch(error => alert('Invalid dog breed, please try again.'));
 }
 
 function displayResults(responseJson) {
@@ -38,3 +43,13 @@ $(function () {
   console.log('App loaded! Waiting for submit!');
   watchForm();
 });
+
+// function getDogImage(breed) {
+//   fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
+//     .then(response => response.json())
+//     .then(responseJson =>
+//       displayResults(responseJson))
+//     .catch(error => alert('Something went wrong. Try again later.'));
+// }
+
+// .catch(error => alert('Invalid dog breed, please try again.'));
